@@ -1,3 +1,5 @@
+
+
 export const isTired = state => state.coffees < 1 && state.naps < 1;
 export const isHyper = state => state.coffees > 3;
 export const isEducated = state => state.studies > 2;
@@ -13,3 +15,8 @@ export const getFace = state => {
 
   return '😀';
 };
+
+export const getCoffee = state => state.coffees;
+export const getStudy = state => state.studies;
+export const getSnacks = state => state.snacks;
+export const getNaps = state => state.naps;

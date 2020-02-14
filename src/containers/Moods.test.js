@@ -1,40 +1,18 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Moods, { isTired, isHyper, isEducated, isHungry, getFace } from './Moods';
+import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
+import store from '../store'; 
+import Moods from './Moods';
+import { getFace } from '../data/selectors/moodsSelectors';
+// import C
 
+let wrapper = null;
 describe('Moods', () => {
+  
+  beforeEach(() => {
+    wrapper = mount(<Provider store={store}><Moods /></Provider>);
+  });
   describe('mood selectors', () => {
-    it('knows if it is tired', () => {
-      expect(isTired({ coffees: 0, naps: 0 })).toBeTruthy();
-    });
-
-    it('knows if it is not tired', () => {
-      expect(isTired({ coffees: 1, naps: 0 })).toBeFalsy();
-    });
-
-    it('knows if it is hyper', () => {
-      expect(isHyper({ coffees: 4 })).toBeTruthy();
-    });
-
-    it('knows if it is not hyper', () => {
-      expect(isHyper({ coffees: 3 })).toBeFalsy();
-    });
-
-    it('knows if it is educated', () => {
-      expect(isEducated({ studies: 3 })).toBeTruthy();
-    });
-
-    it('knows if it is not educated', () => {
-      expect(isEducated({ studies: 2 })).toBeFalsy();
-    });
-
-    it('knows if it is hungry', () => {
-      expect(isHungry({ snacks: 0 })).toBeTruthy();
-    });
-
-    it('knows if it is not hungry', () => {
-      expect(isHungry({ studies: 2 })).toBeFalsy();
-    });
 
     it('is very angry if tired and hungry', () => {
       expect(getFace({ coffees: 0, naps: 0, snacks: 0 })).toEqual('🤬');
@@ -45,11 +23,11 @@ describe('Moods', () => {
     });
 
     it('is sleeping if tired', () => {
-      expect(getFace({ coffees: 4, snacks: 0 })).toEqual('😴');
+      expect(getFace({ coffees: 0, naps: 0 })).toEqual('😴');
     });
 
     it('is crazy if hyper', () => {
-      expect(getFace({ coffees: 4, naps: 0, snacks: 0, studies: 0 })).toEqual('🙀');
+      expect(getFace({ coffees: 4, naps: 0, snacks: 1, studies: 0 })).toEqual('🙀');
     });
 
     it('is mindblown if educated', () => {
@@ -66,37 +44,42 @@ describe('Moods', () => {
   });
 
   describe('container', () => {
+    beforeEach(() => {
+      wrapper = mount(<Provider store={store}><Moods /></Provider>);
+    });
     it('matches a snapshot', () => {
-      const wrapper = shallow(<Moods />);
+      // const wrapper = mount(<Provider store={store}><Moods /></Provider>);
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('updates state on DRINK_COFFEE selection', () => {
-      const wrapper = shallow(<Moods />);
-      wrapper.instance().handleSelection('DRINK_COFFEE');
+    // it('updates state on DRINK_COFFEE selection', () => {
+    //   //const wrapper = shallow(<Moods />);
+    //   const wrapper = mount(<Provider store={store}><Moods /></Provider>);
+    //   console.log(wrapper);
+    //   wrapper.instance().handleSelection('DRINK_COFFEE');
 
-      expect(wrapper.state('coffees')).toEqual(1);
-    });
+    //   expect(wrapper.state('coffees')).toEqual(1);
+    // });
 
-    it('updates state on TAKE_NAP selection', () => {
-      const wrapper = shallow(<Moods />);
-      wrapper.instance().handleSelection('TAKE_NAP');
+    // it('updates state on TAKE_NAP selection', () => {
+    //   //const wrapper = shallow(<Moods />);
+    //   wrapper.instance().handleSelection('TAKE_NAP');
 
-      expect(wrapper.state('naps')).toEqual(1);
-    });
+    //   expect(wrapper.state('naps')).toEqual(1);
+    // });
 
-    it('updates state on EAT_SNACK selection', () => {
-      const wrapper = shallow(<Moods />);
-      wrapper.instance().handleSelection('EAT_SNACK');
+    // it('updates state on EAT_SNACK selection', () => {
+    //   //const wrapper = shallow(<Moods />);
+    //   wrapper.instance().handleSelection('EAT_SNACK');
 
-      expect(wrapper.state('snacks')).toEqual(1);
-    });
+    //   expect(wrapper.state('snacks')).toEqual(1);
+    // });
 
-    it('updates state on STUDY selection', () => {
-      const wrapper = shallow(<Moods />);
-      wrapper.instance().handleSelection('STUDY');
+    // it('updates state on STUDY selection', () => {
+    //   //const wrapper = shallow(<Moods />);
+    //   wrapper.instance().handleSelection('STUDY');
 
-      expect(wrapper.state('studies')).toEqual(1);
-    });
+    //   expect(wrapper.state('studies')).toEqual(1);
+    // });
   });
 });

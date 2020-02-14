@@ -1,4 +1,4 @@
-const { createStore } = require('redux');
+import { createStore } from 'redux';
 import reducer from './data/reducers/moodsReducers';
 
 export default createStore(
