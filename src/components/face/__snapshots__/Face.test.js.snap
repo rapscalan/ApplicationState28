@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Face component renders Face 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <Face
+    emoji="😀"
+  >
+    <p
+      className="Face"
+    >
+      🤬
+    </p>
+  </Face>
+</Provider>
+`;
